@@ -24,7 +24,7 @@
         </div>
       </div>
       <!--主内容-->
-      <div class="index_content">
+      <div class="index_content" v-if="isLogin">
         <!--常用应用-->
         <p class="content_title">常用应用</p>
         <div class="moreUse">
@@ -35,7 +35,7 @@
             </li>
           </ul>
         </div>
-        <div class="index_content_all">
+        <div class="index_content_all flex">
           <!--预警推送-->
           <div class="index_content_left">
             <p class="content_title">预警推送</p>
@@ -44,7 +44,32 @@
                 <span v-for="(item,index) in warnNav" :key="index">{{item}}</span>
               </div>
               <ul class="warn_contentList">
-                <li v-for="(item,index) in warnList" :key="index"></li>
+                <li v-for="(item,index) in warnList" :key="index">
+                  <div class="clear blod">
+                    <div class="fl-left">{{item.title}}</div>
+                    <div class="fl-right">{{item.level}}</div>
+                  </div>
+                  <p>{{item.content}}</p>
+                  <div class="clear">
+                    <span class="fl-left">风险推送人：{{item.user}}</span>
+                    <span class="fl-right">推送时间：{{item.time}}</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!--消息中心-->
+          <div class="index_content_right">
+            <p class="content_title">消息中心</p>
+            <div class="warn_push">
+              <div class="flex borderBottom warn_pushNav">
+                <span v-for="(item,index) in newsNav" :key="index">{{item}}</span>
+              </div>
+              <ul class="newsList">
+                <li v-for="(item,index) in newsMore" :key="index">
+                  <img src="../../static/img/notice.png" alt="">
+                  <span>{{item}}</span>
+                </li>
               </ul>
             </div>
           </div>
@@ -52,7 +77,7 @@
       </div>
 
       <!--登录-->
-      <fixModel v-if="isLogin"></fixModel>
+      <fixModel v-if="isLoginModel"></fixModel>
     </div>
 </template>
 
@@ -63,18 +88,29 @@
       components:{fixModel},
       data(){
           return{
-            isLogin:false,
+            isLogin:true,
+            isLoginModel:false,
             searchList:['浙江国贸','浙江英特'],
-            useList:[{img:require('../../static/img/use_icon.png'),name:'用户管理'}],
+            useList:[
+              {img:require('../../static/img/use_icon01.png'),name:'黑名单申报'},
+              {img:require('../../static/img/use_icon02.png'),name:'黑名单审批'},
+              {img:require('../../static/img/use_icon03.png'),name:'站内信'},
+              {img:require('../../static/img/use_icon04.png'),name:'关注清单'},
+              {img:require('../../static/img/use_icon05.png'),name:'用户管理'},
+            ],
             warnNav:['企查查','中诚信','站内信','集团公示'],
-            warnList:[],
+            warnList:[{title:'XXX有限公司',level:'2级',content:'鉴于国内猪肉价格上涨',user:'XXX',time:'2020-05-19'},
+              {title:'XXX有限公司',level:'2级',content:'鉴于国内猪肉价格上涨',user:'XXX',time:'2020-05-19'}
+            ],
+            newsNav:['关注清单','灰名单','黑名单'],
+            newsMore:['浙江英特集团有限公司','浙江新宏洲贸易有限公司'],
           }
       },
       methods:{
         search(){
           var _this = this
-          if(_this.isLogin == false){
-            _this.isLogin = true
+          if(_this.isLoginModel == false){
+            _this.isLoginModel = true
           }
         }
       }
@@ -105,6 +141,7 @@
   .navHeader_list li.active{
     background: #617be3;
     color: #fff;
+    border-radius: 20px;
   }
   .indexBg{
     width: 100%;
@@ -168,6 +205,7 @@
     float: left;
     margin: 10px 50px;
     font-size: 12px;
+    text-align: center;
   }
   .moreUseList li img{
     display: block;
@@ -198,9 +236,42 @@
     padding: 20px;
   }
   .warn_contentList li{
+    padding: 10px;
+    border: 1px solid #e3e3e3;
     border-top: 2px solid #617be3;
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  .warn_contentList li:last-child{
+    margin-bottom: 0;
   }
   .warn_contentList li:nth-child(even){
     border-top: 2px solid #007892;
+  }
+  .warn_contentList li p{
+    color: #999;
+    margin: 5px 0;
+  }
+  .warn_contentList li span{
+    color: #617be3;
+  }
+  .index_content_right{
+    width: 38%;
+  }
+  .newsList{
+    padding: 20px;
+  }
+  .newsList li{
+    margin-bottom: 20px;
+    background: #e3e3e3;
+    padding: 5px;
+    font-size: 12px;
+  }
+  .newsList li:last-child{
+    margin-bottom: 0;
+  }
+  .newsList li img{
+    width: 20px;
+    margin-right: 5px;
   }
 </style>

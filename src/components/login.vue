@@ -17,7 +17,7 @@
       methods:{
         del(){
           var _this= this;
-          _this.$parent.isLogin = false
+          _this.$parent.isLoginModel = false
         }
       }
     }
