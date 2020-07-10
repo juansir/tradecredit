@@ -5,7 +5,7 @@
           <li><label>用户名：</label><input type="text" placeholder="请输入用户名"></li>
           <li><label>密&nbsp;&nbsp;&nbsp;码：</label><input type="password" placeholder="请输入密码"></li>
         </ul>
-        <div class="loginBtn">登录</div>
+        <div class="loginBtn" @click="joinIN">登录</div>
         <div class="loginClose" @click="del">取消</div>
       </div>
     </div>
@@ -15,6 +15,10 @@
     export default {
         name: "login",
       methods:{
+        joinIN(){
+          var _this= this;
+          _this.$parent.isLoginModel = false
+        },
         del(){
           var _this= this;
           _this.$parent.isLoginModel = false
