@@ -10,6 +10,12 @@ Vue.config.productionTip = false
 import '../static/css/common.css'
 import '../static/css/index.css'
 
+/*引入element*/
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
+Vue.use(ElementUI)
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -3,7 +3,7 @@
       <!--导航栏-->
       <div class="navHeader">
         <div class="clear navHeader_content">
-          <img src="../../static/img/logo.png" alt="" class="fl-left">
+          <router-link to="/" class="fl-left headerLink"><img src="../../static/img/logo.png" alt=""></router-link>
           <ul class="fl-right clear navHeader_list">
             <li class="active">资信门户</li>
             <li>数据分析</li>
@@ -66,7 +66,10 @@
     margin: 0 auto;
     padding-top: 10px;
   }
-  .navHeader_content img{
+  .headerLink{
+    display: block;
+  }
+  .headerLink img{
     height: 40px;
   }
   .navHeader_list li{

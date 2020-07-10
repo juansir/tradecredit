@@ -18,7 +18,7 @@
                 <dd>企查查</dd>
                 <dd>中信保</dd>
                 <dd>中诚信</dd>
-                <dd>更多详情</dd>
+                <dd @click="moreNews">更多详情</dd>
               </dl>
             </li>
           </ul>
@@ -45,7 +45,7 @@
   import allHeader from '@/components/allHeader'
   import allFooter from '@/components/allFooter'
     export default {
-        name: "proList",
+      name: "proList",
       components:{allHeader,allFooter},
       data(){
           return{
@@ -60,6 +60,11 @@
             followList:['浙江英特集团有限公司','浙江英特集团有限公司','浙江英特集团有限公司','浙江英特集团有限公司','浙江英特集团有限公司','浙江英特集团有限公司','浙江英特集团有限公司']
           }
       },
+      methods:{
+        moreNews(){
+          this.$router.push('/essInfo')
+        }
+      }
     }
 </script>
 

@@ -48,7 +48,7 @@
         <p class="content_title">常用应用</p>
         <div class="moreUse">
           <ul class="moreUseList clear">
-            <li v-for="(item,index) in useList" :key="index" >
+            <li v-for="(item,index) in useList" :key="index" @click="goPath(index)">
               <img :src="item.img" alt="">
               <p>{{item.name}}</p>
             </li>
@@ -69,7 +69,7 @@
   import allHeader from '@/components/allHeader'
   import allFooter from '@/components/allFooter'
     export default {
-        name: "index",
+      name: "index",
       components:{allHeader,allFooter,fixModel},
       data(){
           return{
@@ -99,6 +99,13 @@
         },
         changePush(index){
           this.changepushNav = index
+        },
+
+        /*应用跳转*/
+        goPath(index){
+          if(index==4){
+            this.$router.push('/management')
+          }
         }
       }
     }
