@@ -13,7 +13,7 @@
       <!--搜索框-->
       <div class="po-relative">
         <div class="search">
-          <img class="searchLogo" src="../../static/img/baidu.gif" alt="">
+          <img class="searchLogo" src="../../static/img/bannerLogo.png" alt="">
           <div>
             <input type="text" class="search_txt" v-model="searchText"><div class="search_btn" @click="search"><img src="../../static/img/search.png" alt=""></div>
           </div>
@@ -105,7 +105,7 @@
     border-bottom-right-radius: 10px;
     cursor: pointer;
     position: relative;
-    top: -6px;
+    top: -5px;
   }
   .search_btn img{
     width: 25px;
@@ -123,5 +123,6 @@
   }
   .searchLogo{
     width: 300px;
+    margin: 20px 0 40px 0;
   }
 </style>
