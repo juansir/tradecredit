@@ -7,7 +7,6 @@
         <!--header-->
         <div class="clear essContent_head">
           <div class="fl-left">{{company}} <span class="ess_notice" v-if="notice" @click="noticeDel">取消关注</span><span class="ess_noticeDel" @click="noticeAdd" v-else>点击关注</span></div>
-          <!--<div class="fl-right essDown"><img src="../../static/img/downLoad.png" alt="">下载报告</div>-->
         </div>
 
         <!--tab-->
@@ -16,7 +15,8 @@
         </ul>
         <!--components-->
         <div class="essContent_dom">
-          <normalInfo></normalInfo>
+          <normalInfo v-if="changeTabShow==0"></normalInfo>
+          <sinosure v-if="changeTabShow==2"></sinosure>
         </div>
       </div>
 
@@ -29,9 +29,10 @@
   import moreHeader from '@/components/moreHeader'
   import allFooter from '@/components/allFooter'
   import normalInfo from '@/components/normalInfo'
+  import sinosure from '@/components/sinosure'
     export default {
       name: "essInfo",
-      components:{normalInfo,moreHeader,allFooter},
+      components:{normalInfo,moreHeader,allFooter,sinosure},
       data(){
           return{
             company:'浙江英特集团有限公司',
@@ -81,23 +82,6 @@
     background: url("../../static/img/noticeDel.png") no-repeat 0 center;
     background-size: 15px;
     padding-left: 20px;
-  }
-  .essDown{
-    width: 90px;
-    height: 30px;
-    line-height: 30px;
-    margin-top: 20px;
-    text-align: center;
-    background: #fff;
-    font-size: 12px;
-    color: #204051;
-    box-shadow: 0 0 5px #e3e3e3;
-    cursor: pointer;
-  }
-  .essDown img{
-    width: 20px;
-    vertical-align: middle;
-    margin-right: 5px;
   }
   .essTab li{
     line-height: 35px;

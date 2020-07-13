@@ -16,10 +16,7 @@
             <li><label>曾用名</label><span></span></li>
             <li><label>英文名</label><span></span></li>
             <li><label></label><span></span></li>
-          </ul>
-          <ul class="normal_infoAdd">
-            <li><label>企业地址</label><span></span></li>
-            <li><label>经营范围</label><span></span></li>
+            <li class="nativeBig"><label>SinoRating说明</label><span></span></li>
           </ul>
         </div>
         <div class="normal_info">
@@ -106,24 +103,13 @@
   .normal_infoList li label{
     background: #f1f3f4;
   }
-  .normal_infoAdd li{
+  .normal_infoList li.nativeBig{
     width: 100%;
   }
-  .normal_infoAdd li label,span{
-    font-size: 12px;
-    text-align: center;
-    display: inline-block;
-    height: 35px;
-    line-height: 35px;
-    border: 1px solid #EBEEF5;
-    vertical-align: middle;
-    box-sizing: border-box;
-  }
-  .normal_infoAdd li label{
+  .normal_infoList li.nativeBig label{
     width:16.67%;
-    background: #f1f3f4;
   }
-  .normal_infoAdd li span{
+  .normal_infoList li.nativeBig span{
     width:83.33%;
   }
   .normal_table{
