@@ -16,6 +16,10 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.use(ElementUI)
 
+/*使用api*/
+import api from './api/index'
+Vue.prototype.$api = api
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

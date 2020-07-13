@@ -1,18 +1,18 @@
 <template>
     <div>
-      <allHeader></allHeader>
+      <allHeader @child="getInfo"></allHeader>
       <!--中间内容-->
       <div class="index_content flex">
         <!--检测列表-->
         <div class="pro_content_left">
           <p class="content_title">检测列表 <span class="fl-right">根据关键字，共搜索到 {{num}} 条数据结果</span></p>
-          <ul class="proList_li">
+          <ul class="proList_li" v-if="userList.length>0">
             <li class="clear" v-for="(item,index) in userList" :key="index">
               <div class="fl-left proList_content">
-                <p class="proList_txt">{{item.name}}</p>
-                <p>社会统一信用代码：{{item.code}}</p>
-                <p>法人代表：{{item.user}}</p>
-                <p>成立时间：{{item.time}}</p>
+                <p class="proList_txt">{{item.companyName}}</p>
+                <p>社会统一信用代码：{{item.creditCode}}</p>
+                <p>法人代表：{{item.operName}}</p>
+                <p>成立时间：{{item.buildDate}}</p>
               </div>
               <dl class="fl-right proList_btn">
                 <dd>企查查</dd>
@@ -44,23 +44,40 @@
 <script>
   import allHeader from '@/components/allHeader'
   import allFooter from '@/components/allFooter'
+  import axios from 'axios';
     export default {
       name: "proList",
       components:{allHeader,allFooter},
       data(){
           return{
-            num:5,
+            num:0,
             userList:[
+              /*{name:'浙江英特集团有限公司',code:'xxxxxxx',user:'xxx',time:'2020-06-20'},
               {name:'浙江英特集团有限公司',code:'xxxxxxx',user:'xxx',time:'2020-06-20'},
               {name:'浙江英特集团有限公司',code:'xxxxxxx',user:'xxx',time:'2020-06-20'},
               {name:'浙江英特集团有限公司',code:'xxxxxxx',user:'xxx',time:'2020-06-20'},
               {name:'浙江英特集团有限公司',code:'xxxxxxx',user:'xxx',time:'2020-06-20'},
-              {name:'浙江英特集团有限公司',code:'xxxxxxx',user:'xxx',time:'2020-06-20'},
-            ],
+            */],
             followList:['浙江英特集团有限公司','浙江英特集团有限公司','浙江英特集团有限公司','浙江英特集团有限公司','浙江英特集团有限公司','浙江英特集团有限公司','浙江英特集团有限公司']
           }
       },
+      mounted() {
+        //console.log(this.$route.params.text);
+        this.getInfo(this.$route.params.text)
+      },
       methods:{
+        getInfo(text){
+          axios.post(this.$api.getSearchList, {
+            "keyword":text,
+            "page":1
+          }).then(res => {
+            if (res.status == 200) {
+              //console.log(res.data);
+              this.userList = res.data.searchList
+              this.num = res.data.searchList.length
+            }
+          });
+        },
         moreNews(){
           this.$router.push('/essInfo')
         }

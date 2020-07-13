@@ -43,13 +43,15 @@
       methods:{
         search(){
           var _this = this
-          console.log(_this.searchText);
           if(_this.searchText==''||undefined){
             _this.$parent.isLoginModel = true
           }else{
+            this.$emit('child', _this.searchText);
             _this.$router.push({name:'proList',params:{text:_this.searchText}})
+            //console.log(_this.searchText);
           }
-        }
+        },
+
       }
     }
 </script>
