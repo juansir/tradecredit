@@ -1,7 +1,8 @@
 <template>
     <div>
       <div class="clear">
-        <div class="fl-right essDown"><img src="../../static/img/downLoad.png" alt="">下载报告</div>
+        <!--<div class="fl-right essDown"><img src="../../static/img/downLoad.png" alt="">下载报告</div>-->
+        <div class="fl-right report">报告申请</div>
       </div>
       <div class="normal_info">
         <p class="normal_infoTitle">基本信息</p>
@@ -39,6 +40,23 @@
             <th>持股比例</th>
             <th>持股金额</th>
             <th>币种</th>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+      <div class="normal_info">
+        <p class="normal_infoTitle">中信保报告列表</p>
+        <table class="normal_table">
+          <tr>
+            <th>报告</th>
+            <th>报告单号</th>
+            <th>文件路径</th>
+            <th>更新时间</th>
           </tr>
           <tr>
             <td></td>
@@ -141,5 +159,17 @@
     width: 20px;
     vertical-align: middle;
     margin-right: 5px;
+  }
+  .report{
+    width: 90px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    background: #1b7fbd;
+    cursor: pointer;
+  }
+  .report:hover{
+    box-shadow: 0 0 5px #1b7fbd;
   }
 </style>
