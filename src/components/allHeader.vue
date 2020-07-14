@@ -15,7 +15,7 @@
         <div class="search">
           <img class="searchLogo" src="../../static/img/bannerLogo.png" alt="">
           <div>
-            <input type="text" class="search_txt" v-model="searchText"><div class="search_btn" @click="search"><img src="../../static/img/search.png" alt=""></div>
+            <input type="text" class="search_txt" v-model="searchText" @keydown="search"><div class="search_btn" @click="search"><img src="../../static/img/search.png" alt=""></div>
           </div>
           <div class="search_link">
             最近搜索：
