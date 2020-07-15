@@ -2,7 +2,7 @@
     <div>
       <div class="clear">
         <!--<div class="fl-right essDown"><img src="../../static/img/downLoad.png" alt="">下载报告</div>-->
-        <div class="fl-right report">报告申请</div>
+        <div class="fl-right report" @click="reportAdd">报告申请</div>
       </div>
       <div class="normal_info">
         <p class="normal_infoTitle">基本信息</p>
@@ -66,15 +66,27 @@
           </tr>
         </table>
       </div>
+
+      <!--申请报告-->
+      <applyPes v-if="showPes"></applyPes>
     </div>
 </template>
 
 <script>
+  import applyPes from '@/components/model/applyPes'
     export default {
       name: "sinosure",
+      components:{applyPes},
       data(){
           return{
+            showPes:false,
           }
+      },
+      methods:{
+        /*申请中信保*/
+        reportAdd(){
+          this.showPes = true
+        }
       }
     }
 </script>
