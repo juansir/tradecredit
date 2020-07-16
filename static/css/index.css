@@ -80,6 +80,10 @@
 .newsList li{
   margin-bottom: 10px;
   font-size: 12px;
+  cursor: pointer;
+}
+.newsList li:hover{
+  background: #e3e3e3;
 }
 .newsList li:last-child{
   margin-bottom: 0;

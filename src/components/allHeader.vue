@@ -15,7 +15,7 @@
         <div class="search">
           <img class="searchLogo" src="../../static/img/bannerLogo.png" alt="">
           <div>
-            <input type="text" class="search_txt" v-model="searchText" @keydown="search"><div class="search_btn" @click="search"><img src="../../static/img/search.png" alt=""></div>
+            <input type="text" class="search_txt" v-model="searchText"><div class="search_btn" @click="search"><img src="../../static/img/search.png" alt=""></div>
           </div>
           <div class="search_link">
             最近搜索：
@@ -36,8 +36,8 @@
           }
       },
       mounted() {
-        if(this.$route.params.text){
-          this.searchText = this.$route.params.text
+        if(this.$route.query.text){
+          this.searchText = this.$route.query.text
         }
       },
       methods:{
@@ -47,7 +47,7 @@
             _this.$parent.isLoginModel = true
           }else{
             this.$emit('child', _this.searchText);
-            _this.$router.push({name:'proList',params:{text:_this.searchText}})
+            _this.$router.push({name:'proList',query:{text:_this.searchText}})
             //console.log(_this.searchText);
           }
         },

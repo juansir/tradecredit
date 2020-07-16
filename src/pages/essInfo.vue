@@ -30,6 +30,7 @@
   import allFooter from '@/components/allFooter'
   import normalInfo from '@/components/normalInfo'
   import sinosure from '@/components/sinosure'
+  import axios from 'axios';
     export default {
       name: "essInfo",
       components:{normalInfo,moreHeader,allFooter,sinosure},
@@ -41,7 +42,23 @@
             changeTabShow:0,
           }
       },
+      mounted() {
+        this.changeTabShow = this.$route.query.id
+        this.getCare(1,'')
+      },
       methods:{
+        /*关注清单*/
+        getCare(id,val){
+          axios.post(this.$api.getCareList, {
+            "userId":2,
+            "companyId":id,
+            "relation":val
+          }).then(res => {
+            if (res.status == 200) {
+              console.log(res.data);
+            }
+          });
+        },
         noticeDel(){
           this.notice = false
         },

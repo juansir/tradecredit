@@ -37,8 +37,8 @@
               </div>
               <ul class="newsList">
                 <li v-for="(item,index) in newsMore" :key="index">
-                  <img src="../../static/img/notice.png" alt="">
-                  <span>{{item}}</span>
+                  <img src="../../static/img/notice.png" alt="" @click="delCare(item.cid,false)">
+                  <span>{{item.companyName}}</span>
                 </li>
               </ul>
             </div>
@@ -68,6 +68,7 @@
   import fixModel from '@/components/login'
   import allHeader from '@/components/allHeader'
   import allFooter from '@/components/allFooter'
+  import axios from 'axios';
     export default {
       name: "index",
       components:{allHeader,allFooter,fixModel},
@@ -89,8 +90,11 @@
             ],
             newsNav:['关注清单','灰名单','黑名单'],
             changepushNav:0,
-            newsMore:['浙江英特集团有限公司','浙江新宏洲贸易有限公司'],
+            newsMore:[],
           }
+      },
+      created() {
+        this.getCare()
       },
       methods:{
         /*改变样式*/
@@ -106,7 +110,34 @@
           if(index==4){
             this.$router.push('/management')
           }
-        }
+        },
+
+        /*关注清单*/
+        getCare(){
+          axios.post(this.$api.getCareList, {
+            "userId":2
+          }).then(res => {
+            if (res.status == 200) {
+              this.newsMore = res.data.careList
+            }
+          });
+        },
+        /*取消关注*/
+        delCare(id,val){
+          axios.post(this.$api.getCareOrNot, {
+            "userId":2,
+            "companyId":id,
+            "relation":val
+          }).then(res => {
+            //console.log(res.data);
+            if(res.data.code==0){
+              this.$message.success('您已取消关注')
+              this.getCare()
+            }
+          }).catch(err=>{
+            console.log(err);
+          });
+        },
       }
     }
 </script>
