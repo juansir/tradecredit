@@ -19,7 +19,7 @@
           </div>
           <div class="search_link">
             最近搜索：
-            <a v-for="(item,index) in searchList" :key="index">{{item}}</a>
+            <a v-for="(item,index) in searchList" :key="index" @click="searchKey(item.keyWord)">{{item.keyWord}}</a>
           </div>
         </div>
       </div>
@@ -27,20 +27,31 @@
 </template>
 
 <script>
+  import axios from 'axios';
     export default {
       name: "allHeader",
       data(){
           return{
             searchText:'',
-            searchList:['浙江国贸','浙江英特'],
+            searchList:[],
           }
       },
       mounted() {
+        this.getSearch()
         if(this.$route.query.text){
           this.searchText = this.$route.query.text
         }
       },
       methods:{
+        /*最近搜索*/
+        getSearch(){
+          axios.post(this.$api.latestWords,{}).then(res => {
+            if (res.status == 200) {
+              //console.log(res.data.latestWords);
+              this.searchList = res.data.latestWords
+            }
+          });
+        },
         search(){
           var _this = this
           if(_this.searchText==''||undefined){
@@ -51,6 +62,11 @@
             //console.log(_this.searchText);
           }
         },
+        /*最近搜索事件*/
+        searchKey(val){
+          this.searchText = val
+          this.search()
+        }
 
       }
     }
@@ -114,7 +130,7 @@
     margin-top: 10px;
   }
   .search_link{
-    width: 500px;
+    width: 550px;
     text-align: left;
     margin: 10px auto;
     font-size: 12px;
@@ -122,6 +138,7 @@
   .search_link a{
     color: #596e79;
     margin-left: 20px;
+    cursor: pointer;
   }
   .searchLogo{
     width: 300px;

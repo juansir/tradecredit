@@ -42,28 +42,47 @@
             changeTabShow:0,
           }
       },
+      created() {
+        this.getCare()
+      },
       mounted() {
         this.changeTabShow = this.$route.query.id
-        this.getCare(1,'')
       },
       methods:{
         /*关注清单*/
-        getCare(id,val){
-          axios.post(this.$api.getCareList, {
+        getCare(){
+          axios.post(this.$api.getCareStatus, {
+            "userId":2,
+            "companyId":3
+          }).then(res => {
+            if (res.status == 200) {
+              //console.log(res.data);
+              this.notice = res.data.careStatus
+            }
+          });
+        },
+        delCare(id,val,text){
+          axios.post(this.$api.getCareOrNot, {
             "userId":2,
             "companyId":id,
             "relation":val
           }).then(res => {
-            if (res.status == 200) {
-              console.log(res.data);
+            //console.log(res.data);
+            if(res.data.code==0){
+              this.$message.success(text)
+              this.getCare()
             }
+          }).catch(err=>{
+            console.log(err);
           });
         },
         noticeDel(){
           this.notice = false
+          this.delCare(3,false,'您已取消关注')
         },
         noticeAdd(){
           this.notice = true
+          this.delCare(3,true,'您已关注')
         },
         /*切换tab*/
         changeTab(index){
