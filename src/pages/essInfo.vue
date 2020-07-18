@@ -46,7 +46,7 @@
         this.getCare()
       },
       mounted() {
-        this.changeTabShow = this.$route.query.id
+        this.changeTabShow = this.$route.query.nav
       },
       methods:{
         /*关注清单*/
@@ -138,5 +138,6 @@
     width: 100%;
     background: #fff;
     padding: 20px;
+    margin-bottom: 100px;
   }
 </style>

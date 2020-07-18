@@ -28,8 +28,8 @@
           <p class="content_title">我的关注</p>
           <div class="warn_push">
             <ul class="newsList">
-              <li v-for="(item,index) in followList" :key="index">
-                <img src="../../static/img/notice.png" alt="" @click="delCare(item.cid,false)">
+              <li v-for="(item,index) in followList" :key="index" @click="moreNews(0)">
+                <img src="../../static/img/notice.png" alt="" @click.stop="delCare(item.cid,false)">
                 <span>{{item.companyName}}</span>
               </li>
             </ul>
@@ -114,8 +114,8 @@
             console.log(err);
           });
         },
-        moreNews(id){
-          this.$router.push({name:'essInfo',query:{id:id}})
+        moreNews(nav){
+          this.$router.push({name:'essInfo',query:{nav:nav}})
         }
       }
     }
