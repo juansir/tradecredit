@@ -20,11 +20,11 @@
               </tr>
               <tr>
                 <td style="width: 200px"><input type="text" v-model="report.reportbuyerNo" /></td>
-                <td style="width: 110px"><input type="text" v-model="report.reportCorpCountryCode" /></td>
-                <td style="width: 150px"><input type="text" v-model="report.reportCorpChnName" /></td>
-                <td style="width: 150px"><input type="text" v-model="report.reportCorpEngName" /></td>
-                <td style="width: 220px"><input type="text" v-model="report.reportCorpaddress" /></td>
-                <td style="width: 180px"><input type="text" v-model="report.creditno" /></td>
+                <td style="width: 110px"><input disabled type="text" v-model="report.reportCorpCountryCode" /></td>
+                <td style="width: 150px"><input disabled type="text" v-model="report.reportCorpChnName" /></td>
+                <td style="width: 150px"><input disabled type="text" v-model="report.reportCorpEngName" /></td>
+                <td style="width: 220px"><input disabled type="text" v-model="report.reportCorpaddress" /></td>
+                <td style="width: 180px"><input disabled type="text" v-model="report.creditno" /></td>
                 <td style="width: 60px">
                   <select v-model="report.istranslation">
                     <option v-for="(item,index) in istranslation" :key="index" v-bind:value="item.id" v-text="item.name"></option>
@@ -49,7 +49,7 @@
                 <th></th>
               </tr>
               <tr>
-                <td style="width: 200px"><input type="text" v-model="noReport.reportbuyerNo" /></td>
+                <td style="width: 200px"><input disabled type="text" v-model="noReport.reportbuyerNo" /></td>
                 <td style="width: 110px"><input type="text" v-model="noReport.reportCorpCountryCode" /></td>
                 <td style="width: 150px"><input type="text" v-model="noReport.reportCorpChnName" /></td>
                 <td style="width: 150px"><input type="text" v-model="noReport.reportCorpEngName" /></td>
@@ -60,7 +60,7 @@
                     <option v-for="(item,index) in noIstranslation" :key="index" v-bind:value="item.id" v-text="item.name"></option>
                   </select>
                 </td>
-                <td><div class="applyBtn">点击申请</div></td>
+                <td><div class="applyBtn" @click="noApplyAdd">点击申请</div></td>
               </tr>
             </table>
           </div>
@@ -77,7 +77,7 @@
           return{
             user:'admin',
             report:{
-              corpSerialNo:'VVObCJSHTSSMh2j0',
+              userId:1,
               reportbuyerNo:'CHN001941411',
               reportCorpCountryCode:'',
               reportCorpChnName:'',
@@ -87,6 +87,7 @@
               istranslation:'0',
             },
             noReport:{
+              userId:1,
               reportbuyerNo:'',
               reportCorpCountryCode:'',
               reportCorpChnName:'',
@@ -105,7 +106,31 @@
         },
         /*有信保申请*/
         applyAdd(){
-          axios.post(this.$api.zhongxinbao,this.report).then(res => {
+          axios({
+            method: 'post',
+            headers:{
+              "token": this.$cookies.get('token')||'',
+            },
+            url:this.$api.zhongxinbao,
+            data:this.report
+          }).then(res => {
+            //console.log(res.data.returnMsg);
+            this.$message.success(res.data.returnMsg)
+            this.hideshowPes()
+          }).catch(err=>{
+            console.log(err);
+          });
+        },
+        /*无信保申请*/
+        noApplyAdd(){
+          axios({
+            method: 'post',
+            headers:{
+              "token": this.$cookies.get('token')||'',
+            },
+            url:this.$api.zhongxinbao,
+            data:this.noReport
+          }).then(res => {
             //console.log(res.data.returnMsg);
             this.$message.success(res.data.returnMsg)
             this.hideshowPes()
@@ -114,17 +139,6 @@
           });
         }
       },
-      /*computed: {
-        text () {
-          return function (value) {
-            if (value == '' || value == 0) {
-              return '100%'
-            } else {
-              return String(value).length * 0.32 + 'rem'
-            }
-          }
-        }
-      },*/
     }
 </script>
 
@@ -199,5 +213,11 @@
     color: #fff;
     cursor: pointer;
     margin: 8px;
+  }
+  .bgGray{
+    background: #f1f3f4
+  }
+  .bgGray input{
+    background: #f1f3f4
   }
 </style>

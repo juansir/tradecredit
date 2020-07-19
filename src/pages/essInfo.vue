@@ -51,9 +51,16 @@
       methods:{
         /*关注清单*/
         getCare(){
-          axios.post(this.$api.getCareStatus, {
-            "userId":2,
-            "companyId":3
+          axios({
+            method: 'post',
+            headers:{
+              "token": this.$cookies.get('token')||'',
+            },
+            url:this.$api.getCareStatus,
+            data:{
+              "userId":1,
+              "companyId":3
+            }
           }).then(res => {
             if (res.status == 200) {
               //console.log(res.data);
@@ -62,10 +69,17 @@
           });
         },
         delCare(id,val,text){
-          axios.post(this.$api.getCareOrNot, {
-            "userId":2,
-            "companyId":id,
-            "relation":val
+          axios({
+            method: 'post',
+            headers:{
+              "token": this.$cookies.get('token')||'',
+            },
+            url:this.$api.getCareOrNot,
+            data:{
+              "userId":1,
+              "companyId":id,
+              "relation":val
+            }
           }).then(res => {
             //console.log(res.data);
             if(res.data.code==0){

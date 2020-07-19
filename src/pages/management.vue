@@ -15,7 +15,7 @@
             type="selection"
             width="55">
           </el-table-column>
-          <el-table-column
+          <!--<el-table-column
             prop="company"
             label="公司名称"
             width="160">
@@ -23,7 +23,7 @@
           <el-table-column
             prop="department"
             label="部门名称">
-          </el-table-column>
+          </el-table-column>-->
           <el-table-column
             prop="code"
             label="工号">

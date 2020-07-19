@@ -5,8 +5,10 @@
         <div class="clear navHeader_content">
           <router-link to="/" class="fl-left headerLink"><img src="../../static/img/logo.png" alt=""></router-link>
           <ul class="fl-right clear navHeader_list">
-            <li class="active">资信门户</li>
-            <li>数据分析</li>
+            <!--<li class="active">资信门户</li>
+            <li>数据分析</li>-->
+            <li v-if="isLogin" @click="joinBtn">登录</li>
+            <li v-else @click="loginOut">退出</li>
           </ul>
         </div>
       </div>
@@ -34,9 +36,15 @@
           return{
             searchText:'',
             searchList:[],
+            isLogin:true,
           }
       },
       mounted() {
+        if(this.$cookies.get('token')){
+          this.isLogin = false
+        }else{
+          this.isLogin = true
+        }
         this.getSearch()
         if(this.$route.query.text){
           this.searchText = this.$route.query.text
@@ -45,18 +53,28 @@
       methods:{
         /*最近搜索*/
         getSearch(){
-          axios.post(this.$api.latestWords,{}).then(res => {
+          axios({
+            method: 'post',
+            headers:{
+              "token": this.$cookies.get('token')||'',
+            },
+            url:this.$api.latestWords,
+            data:{}
+          }).then(res => {
             if (res.status == 200) {
-              //console.log(res.data.latestWords);
               this.searchList = res.data.latestWords
             }
-          });
+          })
+          //axios.post(this.$api.latestWords,{});
         },
         search(){
           var _this = this
-          if(_this.searchText==''||undefined){
-            _this.$parent.isLoginModel = true
-          }else{
+
+        if(_this.searchText==''||undefined){
+          alert('请输入搜索内容')
+        }else if(_this.searchText==''&&_this.$cookies.get('token')==null){
+          _this.$parent.isLoginModel = true
+        }else{
             this.$emit('child', _this.searchText);
             _this.$router.push({name:'proList',query:{text:_this.searchText}})
             //console.log(_this.searchText);
@@ -66,7 +84,23 @@
         searchKey(val){
           this.searchText = val
           this.search()
-        }
+        },
+
+        /*登录*/
+        joinBtn(){
+          this.$parent.isLoginModel = true
+        },
+        /*退出*/
+        loginOut(){
+          this.$cookies.set("token", '');
+          this.$cookies.remove("token");
+          // console.log(Cookie.get("token"))
+          if(!this.$cookies.get("token")){
+            alert("退出完成");
+            this.isLogin = false;
+          }
+          this.$router.push({path:'/'})
+        },
 
       }
     }
@@ -96,6 +130,8 @@
     line-height: 40px;
     padding: 0 20px;
     margin-left: 20px;
+    color: #fff;
+    cursor: pointer;
   }
   .navHeader_list li.active{
     background: #fff;

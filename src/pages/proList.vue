@@ -76,9 +76,16 @@
       },
       methods:{
         getInfo(text){
-          axios.post(this.$api.getSearchList, {
-            "keyword":text,
-            "page":1
+          axios({
+            method: 'post',
+            headers:{
+              "token": this.$cookies.get('token')||'',
+            },
+            url:this.$api.getSearchList,
+            data:{
+              "keyword":text,
+              "page":1
+            }
           }).then(res => {
             if (res.status == 200) {
               //console.log(res.data);
@@ -89,8 +96,15 @@
         },
         /*关注清单*/
         getCare(){
-          axios.post(this.$api.getCareList, {
-            "userId":2,
+          axios({
+            method: 'post',
+            headers:{
+              "token": this.$cookies.get('token')||'',
+            },
+            url:this.$api.getCareList,
+            data:{
+              "userId":1
+            }
           }).then(res => {
             if (res.status == 200) {
               //console.log(res.data);
@@ -100,10 +114,17 @@
         },
         /*取消关注*/
         delCare(id,val){
-          axios.post(this.$api.getCareOrNot, {
-            "userId":2,
-            "companyId":id,
-            "relation":val
+          axios({
+            method: 'post',
+            headers:{
+              "token": this.$cookies.get('token')||'',
+            },
+            url:this.$api.getCareOrNot,
+            data:{
+              "userId":1,
+              "companyId":id,
+              "relation":val
+            }
           }).then(res => {
             //console.log(res.data);
             if(res.data.code==0){

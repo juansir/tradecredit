@@ -75,7 +75,7 @@
             <th>更新时间</th>
           </tr>
           <tr>
-            <td><a href="">中国企业资信评估准报告.pdf</a></td>
+            <td><a @click="downPdf">中国企业资信评估准报告.pdf</a></td>
             <td>461964000461964</td>
             <td>"/home/ftpuser/461964000461964.pdf"</td>
             <td>2020/05/15</td>
@@ -89,6 +89,7 @@
 </template>
 
 <script>
+  import axios from 'axios';
   import applyPes from '@/components/model/applyPes'
     export default {
       name: "sinosure",
@@ -102,6 +103,26 @@
         /*申请中信保*/
         reportAdd(){
           this.showPes = true
+        },
+        downPdf(){
+          axios({
+            method: 'post',
+            headers:{
+              "token": this.$cookies.get('token')||'',
+            },
+            url:this.$api.getPDF,
+            data:{
+              "userId":1,
+              "username":"admin",
+              "password":"123456"
+            },
+          }).then(res => {
+            console.log(res.data);
+            /*var url = res.data.message
+            window.open(url);*/
+          }).catch(err=>{
+            console.log(err);
+          });
         }
       }
     }
@@ -167,6 +188,7 @@
   }
   .normal_table td a{
     color: #1b7fbd;
+    cursor: pointer;
   }
   .essDown{
     width: 90px;

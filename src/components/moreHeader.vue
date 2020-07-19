@@ -5,8 +5,10 @@
         <div class="clear navHeader_content">
           <router-link to="/" class="fl-left headerLink"><img src="../../static/img/logo.png" alt=""></router-link>
           <ul class="fl-right clear navHeader_list">
-            <li class="active">资信门户</li>
-            <li>数据分析</li>
+            <!--<li class="active">资信门户</li>
+            <li>数据分析</li>-->
+            <li v-if="isLogin" @click="joinBtn">登录</li>
+            <li v-else @click="loginOut">退出</li>
           </ul>
         </div>
       </div>
@@ -18,12 +20,34 @@
       name: "moreHeader",
       data(){
           return{
+            isLogin:true,
             searchText:'',
             searchList:['浙江国贸','浙江英特'],
           }
       },
+      mounted() {
+        if(this.$cookies.get('token')){
+          this.isLogin = false
+        }else{
+          this.isLogin = true
+        }
+      },
       methods:{
-
+        /*登录*/
+        joinBtn(){
+          this.$parent.isLoginModel = true
+        },
+        /*退出*/
+        loginOut(){
+          this.$cookies.set("token", '');
+          this.$cookies.remove("token");
+          // console.log(Cookie.get("token"))
+          if(!this.$cookies.get("token")){
+            alert("退出完成");
+            this.isLogin = false;
+          }
+          this.$router.push({path:'/'})
+        },
       }
     }
 </script>
@@ -52,6 +76,8 @@
     line-height: 40px;
     padding: 0 20px;
     margin-left: 20px;
+    color: #fff;
+    cursor: pointer;
   }
   .navHeader_list li.active{
     background: #fff;

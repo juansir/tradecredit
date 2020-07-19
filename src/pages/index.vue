@@ -3,7 +3,7 @@
       <allHeader></allHeader>
 
       <!--主内容-->
-      <div class="index_content" v-if="isLogin">
+      <div class="index_content" v-show="isLogin">
         <div class="index_content_all flex">
           <!--预警推送-->
           <div class="index_content_left">
@@ -96,6 +96,14 @@
       created() {
         this.getCare()
       },
+      mounted() {
+       // console.log(this.$cookies.get('token'));
+        if(this.$cookies.get('token')){
+          this.isLogin = true
+        }else{
+          this.isLogin = false
+        }
+      },
       methods:{
         /*改变样式*/
         changeNav(index){
@@ -114,8 +122,15 @@
 
         /*关注清单*/
         getCare(){
-          axios.post(this.$api.getCareList, {
-            "userId":2
+          axios({
+            method: 'post',
+            headers:{
+              "token": this.$cookies.get('token')||'',
+            },
+            url:this.$api.getCareList,
+            data:{
+              "userId":1
+            }
           }).then(res => {
             if (res.status == 200) {
               this.newsMore = res.data.careList
@@ -124,10 +139,17 @@
         },
         /*取消关注*/
         delCare(id,val){
-          axios.post(this.$api.getCareOrNot, {
-            "userId":2,
-            "companyId":id,
-            "relation":val
+          axios({
+            method: 'post',
+            headers:{
+              "token": this.$cookies.get('token')||'',
+            },
+            url:this.$api.getCareOrNot,
+            data:{
+              "userId":1,
+              "companyId":id,
+              "relation":val
+            }
           }).then(res => {
             //console.log(res.data);
             if(res.data.code==0){
