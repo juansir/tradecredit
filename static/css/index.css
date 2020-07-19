@@ -91,6 +91,12 @@
 .newsList li img{
   width: 20px;
   margin-right: 5px;
+  vertical-align: middle;
+}
+.newsList li img.rightIcon{
+  width: 15px;
+  margin-left: 3px;
+  margin-right: 0;
 }
 .borderBottom{
   color: #596e79;

@@ -15,10 +15,10 @@
                 <p>成立时间：{{item.buildDate}}</p>
               </div>
               <dl class="fl-right proList_btn">
-                <dd @click="moreNews(1)">企查查</dd>
-                <dd @click="moreNews(2)">中信保</dd>
-                <dd @click="moreNews(3)">中诚信</dd>
-                <dd @click="moreNews(0)">更多详情</dd>
+                <dd @click="moreNews(item.companyName,1)">企查查</dd>
+                <dd @click="moreNews(item.companyName,2)">中信保</dd>
+                <dd @click="moreNews(item.companyName,3)">中诚信</dd>
+                <dd @click="moreNews(item.companyName,0)">更多详情</dd>
               </dl>
             </li>
           </ul>
@@ -28,7 +28,7 @@
           <p class="content_title">我的关注</p>
           <div class="warn_push">
             <ul class="newsList">
-              <li v-for="(item,index) in followList" :key="index" @click="moreNews(0)">
+              <li v-for="(item,index) in followList" :key="index" @click="moreNews(item.companyName,0)">
                 <img src="../../static/img/notice.png" alt="" @click.stop="delCare(item.cid,false)">
                 <span>{{item.companyName}}</span>
               </li>
@@ -135,8 +135,8 @@
             console.log(err);
           });
         },
-        moreNews(nav){
-          this.$router.push({name:'essInfo',query:{nav:nav}})
+        moreNews(title,nav){
+          this.$router.push({name:'essInfo',query:{title:title,nav:nav}})
         }
       }
     }

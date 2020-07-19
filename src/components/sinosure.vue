@@ -117,9 +117,9 @@
               "password":"123456"
             },
           }).then(res => {
-            console.log(res.data);
-            /*var url = res.data.message
-            window.open(url);*/
+           // console.log(res.data);
+            var url = res.data.msg
+            window.open(url);
           }).catch(err=>{
             console.log(err);
           });

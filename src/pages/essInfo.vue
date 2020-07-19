@@ -6,7 +6,7 @@
       <div class="essContent">
         <!--header-->
         <div class="clear essContent_head">
-          <div class="fl-left">{{company}} <span class="ess_notice" v-if="notice" @click="noticeDel">取消关注</span><span class="ess_noticeDel" @click="noticeAdd" v-else>点击关注</span></div>
+          <div class="fl-left">{{company}}</div>
         </div>
 
         <!--tab-->
@@ -16,6 +16,7 @@
         <!--components-->
         <div class="essContent_dom">
           <normalInfo v-if="changeTabShow==0"></normalInfo>
+          <search v-if="changeTabShow==1"></search>
           <sinosure v-if="changeTabShow==2"></sinosure>
         </div>
       </div>
@@ -29,15 +30,15 @@
   import moreHeader from '@/components/moreHeader'
   import allFooter from '@/components/allFooter'
   import normalInfo from '@/components/normalInfo'
+  import search from '@/components/search'
   import sinosure from '@/components/sinosure'
   import axios from 'axios';
     export default {
       name: "essInfo",
-      components:{normalInfo,moreHeader,allFooter,sinosure},
+      components:{normalInfo,moreHeader,allFooter,search,sinosure},
       data(){
           return{
             company:'浙江英特集团有限公司',
-            notice:true,
             navList:['企业基本信息','企查查','中信保','中诚信'],
             changeTabShow:0,
           }
@@ -46,7 +47,9 @@
         this.getCare()
       },
       mounted() {
+        //console.log(this.$route.query);
         this.changeTabShow = this.$route.query.nav
+        this.company = this.$route.query.title
       },
       methods:{
         /*关注清单*/
@@ -68,36 +71,7 @@
             }
           });
         },
-        delCare(id,val,text){
-          axios({
-            method: 'post',
-            headers:{
-              "token": this.$cookies.get('token')||'',
-            },
-            url:this.$api.getCareOrNot,
-            data:{
-              "userId":1,
-              "companyId":id,
-              "relation":val
-            }
-          }).then(res => {
-            //console.log(res.data);
-            if(res.data.code==0){
-              this.$message.success(text)
-              this.getCare()
-            }
-          }).catch(err=>{
-            console.log(err);
-          });
-        },
-        noticeDel(){
-          this.notice = false
-          this.delCare(3,false,'您已取消关注')
-        },
-        noticeAdd(){
-          this.notice = true
-          this.delCare(3,true,'您已关注')
-        },
+
         /*切换tab*/
         changeTab(index){
           this.changeTabShow = index
@@ -120,18 +94,6 @@
     font-size: 12px;
     margin-left: 20px;
     cursor: pointer;
-  }
-  .ess_notice{
-    color: #ffa931;
-    background: url("../../static/img/notice.png") no-repeat 0 center;
-    background-size: 15px;
-    padding-left: 20px;
-  }
-  .ess_noticeDel{
-    color: #ffa931;
-    background: url("../../static/img/noticeDel.png") no-repeat 0 center;
-    background-size: 15px;
-    padding-left: 20px;
   }
   .essTab li{
     line-height: 35px;

@@ -36,9 +36,11 @@
                 <span v-for="(item,index) in newsNav" :key="index" @click="changePush(index)" :class="{ borderBottom:changepushNav == index}">{{item}}</span>
               </div>
               <ul class="newsList">
-                <li v-for="(item,index) in newsMore" :key="index" @click="moreNews(0)">
+                <li v-for="(item,index) in newsMore" :key="index" @click="moreNews(item.companyName,0)">
                   <img src="../../static/img/notice.png" alt="" @click.stop="delCare(item.cid,false)">
                   <span>{{item.companyName}}</span>
+                  <img class="rightIcon" src="../../static/img/index_icon01.png" alt="">
+                  <img class="rightIcon" src="../../static/img/index_icon02.png" alt="">
                 </li>
               </ul>
             </div>
@@ -162,8 +164,8 @@
         },
 
         /*详情*/
-        moreNews(nav){
-          this.$router.push({name:'essInfo',query:{nav:nav}})
+        moreNews(title,nav){
+          this.$router.push({name:'essInfo',query:{title:title,nav:nav}})
         }
       }
     }
