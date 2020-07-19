@@ -89,7 +89,6 @@
 </template>
 
 <script>
-  import axios from 'axios';
   import applyPes from '@/components/model/applyPes'
     export default {
       name: "sinosure",
@@ -99,22 +98,10 @@
             showPes:false,
           }
       },
-      mounted() {
-        axios.post(this.$api.zhongxinbao,{
-          "corpSerialNo": "VVObCJSHTSSMh2j0",
-          "clientNo": "20000340",
-          "reportbuyerNo": "CHN001941411"
-        }).then(res => {
-          if (res.status == 200) {
-            console.log(res.data);
-          }
-        });
-      },
       methods:{
         /*申请中信保*/
         reportAdd(){
           this.showPes = true
-          //zhongxinbao
         }
       }
     }
