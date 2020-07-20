@@ -112,7 +112,7 @@
             },
             url:this.$api.getPDF,
             data:{
-              "userId":1,
+              "userId":this.$cookies.get('userId'),
               "username":"admin",
               "password":"123456"
             },

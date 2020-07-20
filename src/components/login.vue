@@ -62,8 +62,11 @@
                   _this.$router.push({path:'/'})
                   window.location.reload()
                 }
+              }else{
+                alert('登录名或者密码错误')
               }
             }).catch(err=>{
+              alert('登录名或者密码错误')
               console.log(err);
             });
           }

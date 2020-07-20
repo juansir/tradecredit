@@ -4,6 +4,12 @@
       <moreHeader></moreHeader>
 
       <div class="manageTable">
+        <!--条件筛选-->
+        <div class="clear manageTableTitle">
+          <el-input class="fl-left manageTableInput" v-model="userName" placeholder="请输入用户名"></el-input>
+          <el-input class="fl-left manageTableInput" v-model="userCode" placeholder="请输入工号"></el-input>
+          <el-button type="primary">查询</el-button>
+        </div>
         <el-table
           ref="multipleTable"
           :data="tableData"
@@ -128,7 +134,9 @@
             level:'',
             ident:'已停用',
           },*/],
-          multipleSelection: []
+          multipleSelection: [],
+          userName:'',
+          userCode:''
         }
       },
       created() {
@@ -221,5 +229,12 @@
   }
   >>>.el-button--mini{
     padding: 5px 8px;
+  }
+  .manageTableTitle{
+    margin-bottom: 20px;
+  }
+  .manageTableInput{
+    width: 200px;
+    margin-right: 20px;
   }
 </style>

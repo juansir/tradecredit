@@ -19,6 +19,24 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.use(ElementUI)
 
+/*http response 拦截器*/
+import axios from 'axios';
+axios.interceptors.response.use(response => {
+  if (response) {
+    //console.log(response);
+    if(response.data.code == 300){
+      localStorage.clear();     //删除用户信息
+      //如果超时就处理 ，指定要跳转的页面(比如登陆页)
+      alert('登录失效,请重新登录!')
+      router.replace({path: '/'})
+      window.location.reload()
+    }
+  }
+  return response;
+}, error => {
+  return Promise.reject(error.response.data) //返回接口返回的错误信息
+})
+
 
 /*使用api*/
 import api from './api/index'

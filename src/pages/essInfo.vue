@@ -63,7 +63,7 @@
             },
             url:this.$api.getCareStatus,
             data:{
-              "userId":1,
+              "userId":this.$cookies.get('userId'),
               "companyId":3
             }
           }).then(res => {

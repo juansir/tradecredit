@@ -131,7 +131,7 @@
             },
             url:this.$api.getCareList,
             data:{
-              "userId":1
+              "userId":this.$cookies.get('userId')
             }
           }).then(res => {
             if (res.status == 200) {
@@ -148,7 +148,7 @@
             },
             url:this.$api.getCareOrNot,
             data:{
-              "userId":1,
+              "userId":this.$cookies.get('userId'),
               "companyId":id,
               "relation":val
             }

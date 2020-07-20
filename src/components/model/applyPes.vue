@@ -77,7 +77,7 @@
           return{
             user:'admin',
             report:{
-              userId:1,
+              userId:this.$cookies.get('userId'),
               reportbuyerNo:'CHN001941411',
               reportCorpCountryCode:'',
               reportCorpChnName:'',
@@ -87,7 +87,7 @@
               istranslation:'0',
             },
             noReport:{
-              userId:1,
+              userId:this.$cookies.get('userId'),
               reportbuyerNo:'',
               reportCorpCountryCode:'',
               reportCorpChnName:'',

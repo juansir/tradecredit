@@ -5,7 +5,7 @@
       <div class="index_content flex">
         <!--检测列表-->
         <div class="pro_content_left">
-          <p class="content_title">检测列表 <span class="fl-right">根据关键字，共搜索到 {{num}} 条数据结果，结果来自客商主档/中诚信</span></p>
+          <p class="content_title">检测列表 <span class="fl-right">根据关键字，共搜索到 {{num}} 条数据结果，结果来自{{sourceType}}</span></p>
           <ul class="proList_li" v-if="userList.length>0">
             <li class="clear" v-for="(item,index) in userList" :key="index">
               <div class="fl-left proList_content">
@@ -61,7 +61,8 @@
               {name:'浙江英特集团有限公司',code:'xxxxxxx',user:'xxx',time:'2020-06-20'},
             */],
             //followList:['浙江英特集团有限公司','浙江英特集团有限公司','浙江英特集团有限公司','浙江英特集团有限公司','浙江英特集团有限公司','浙江英特集团有限公司','浙江英特集团有限公司']
-            followList:[]
+            followList:[],
+            sourceType:'',
           }
       },
       watch:{
@@ -93,6 +94,7 @@
               //console.log(res.data);
               this.userList = res.data.searchList
               this.num = res.data.searchList.length
+              this.sourceType = res.data.sourceType
             }
           });
         },
