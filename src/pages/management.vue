@@ -25,33 +25,46 @@
             label="部门名称">
           </el-table-column>-->
           <el-table-column
-            prop="code"
+            prop="username"
             label="工号">
           </el-table-column>
           <el-table-column
-            prop="user"
+            prop="name"
             label="人员">
           </el-table-column>
-          <el-table-column
-            prop="state"
-            label="人员状态">
-          </el-table-column>
-          <el-table-column
+          <!--<el-table-column
             prop="sex"
             label="性别"
             width="60">
-          </el-table-column>
+          </el-table-column>-->
           <el-table-column
-            prop="level"
+            prop="permissionLevel"
             label="权限级别">
           </el-table-column>
           <el-table-column
-            prop="ident"
-            label="状态标识">
+            prop="email"
+            label="邮箱">
           </el-table-column>
           <el-table-column
-            align="right" width="180">
-            <template slot="header" slot-scope="scope">
+            prop="mobile"
+            label="手机号">
+          </el-table-column>
+          <el-table-column
+            prop="status"
+            label="状态"
+            width="100"
+            :filters="[{ text: '已停用', value: '0' }, { text: '已启用', value: '1' }]"
+            :filter-method="filterTag"
+            filter-placement="bottom-end">
+            <template slot-scope="scope">
+              <el-tag
+                :type="scope.row.staTxt === '已启用' ? 'primary' : 'info'"
+                disable-transitions>{{scope.row.staTxt}}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column
+            align="right" width="180" label="操作">
+            <!--<template slot="header" slot-scope="scope">
               <el-button
                 size="mini"
                 @click="handleEditAll(scope.$index, scope.row)">一键启用</el-button>
@@ -59,7 +72,7 @@
                 size="mini"
                 type="primary"
                 @click="handleDeleteAll(scope.$index, scope.row)">一键停用</el-button>
-            </template>
+            </template>-->
             <template slot-scope="scope">
               <el-button
                 size="mini"
@@ -81,12 +94,13 @@
 <script>
   import moreHeader from '@/components/moreHeader'
   import allFooter from '@/components/allFooter'
+  import axios from 'axios';
     export default {
       name: "management",
       components:{moreHeader,allFooter},
       data(){
         return{
-          tableData: [{
+          tableData: [/*{
             company:'浙江省中医药健康产业集团有限公司',
             department:'财务委派',
             code:'20101880',
@@ -113,20 +127,76 @@
             sex:'女',
             level:'',
             ident:'已停用',
-          },],
+          },*/],
           multipleSelection: []
         }
       },
+      created() {
+        this.getUserInfo(1)
+      },
       methods:{
+        /*用户信息*/
+        getUserInfo(page){
+          axios({
+            method: 'post',
+            headers:{
+              "token": this.$cookies.get('token')||'',
+            },
+            url:this.$api.getUserList,
+            data:{
+              "pageIndex": page,
+              "pageSize": 20
+            }
+          }).then(res => {
+            if (res.status == 200) {
+              this.tableData = res.data.userList
+              this.tableData.map(m=>{
+                if(m.status==0){
+                  m.staTxt = '已停用'
+                }else {
+                  m.staTxt = '已启用'
+                }
+              })
+              //console.log(this.tableData);
+            }
+          });
+        },
+        filterTag(value, row) {
+          return row.status === value;
+        },
+
         handleSelectionChange(val) {
           this.multipleSelection = val;
         },
 
         /*列表操作*/
-        handleEditAll(){},
-        handleDeleteAll(){},
-        handleEdit(){},
-        handleDelete(){},
+        /*handleEditAll(){},
+        handleDeleteAll(){},*/
+        handleEdit(index,row){
+          this.updateUser(row.userId,1)
+        },
+        handleDelete(index,row){
+          this.updateUser(row.userId,0)
+        },
+
+        updateUser(id,code){
+          axios({
+            method: 'post',
+            headers:{
+              "token": this.$cookies.get('token')||'',
+            },
+            url:this.$api.updateUser,
+            data:{
+              "userId": id,
+              "status": code
+            }
+          }).then(res => {
+            if (res.status == 200) {
+              console.log(res);
+              this.getUserInfo(1)
+            }
+          });
+        }
       }
     }
 </script>
@@ -135,6 +205,7 @@
   .manageTable{
     width: 1200px;
     margin: 20px auto;
+    margin-bottom: 100px;
   }
   >>>.el-table thead{
     color: #333;

@@ -18,6 +18,7 @@
           <normalInfo v-if="changeTabShow==0"></normalInfo>
           <search v-if="changeTabShow==1"></search>
           <sinosure v-if="changeTabShow==2"></sinosure>
+          <zcxPage v-if="changeTabShow==3"></zcxPage>
         </div>
       </div>
 
@@ -32,10 +33,11 @@
   import normalInfo from '@/components/normalInfo'
   import search from '@/components/search'
   import sinosure from '@/components/sinosure'
+  import zcxPage from '@/components/zcxPage'
   import axios from 'axios';
     export default {
       name: "essInfo",
-      components:{normalInfo,moreHeader,allFooter,search,sinosure},
+      components:{normalInfo,moreHeader,allFooter,search,sinosure,zcxPage},
       data(){
           return{
             company:'浙江英特集团有限公司',

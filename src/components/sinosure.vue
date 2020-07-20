@@ -116,10 +116,25 @@
               "username":"admin",
               "password":"123456"
             },
+            responseType: 'blob',
           }).then(res => {
-           // console.log(res.data);
-            var url = res.data.msg
-            window.open(url);
+            const content = res.data
+            const blob = new Blob([content])
+            const fileName = '中国企业资信评估准报告.pdf'
+            if ('download' in document.createElement('a')) { // 非IE下载
+              const elink = document.createElement('a')
+              elink.download = fileName
+              elink.style.display = 'none'
+              elink.href = URL.createObjectURL(blob)
+              document.body.appendChild(elink)
+              elink.click()
+              URL.revokeObjectURL(elink.href) // 释放URL 对象
+              document.body.removeChild(elink)
+            } else { // IE10+下载
+              navigator.msSaveBlob(blob, fileName)
+            }
+            // var url = res.data.msg
+            // window.open(url);
           }).catch(err=>{
             console.log(err);
           });

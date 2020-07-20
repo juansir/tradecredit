@@ -8,7 +8,7 @@
             <!--<li class="active">资信门户</li>
             <li>数据分析</li>-->
             <li v-if="isLogin" @click="joinBtn">登录</li>
-            <li v-else @click="loginOut">退出</li>
+            <li v-else @click="loginOut"> 用户 : {{userName}} | 退出</li>
           </ul>
         </div>
       </div>
@@ -37,11 +37,13 @@
             searchText:'',
             searchList:[],
             isLogin:true,
+            userName:''
           }
       },
       mounted() {
         if(this.$cookies.get('token')){
           this.isLogin = false
+          this.userName = this.$cookies.get('name')
         }else{
           this.isLogin = true
         }
@@ -69,10 +71,9 @@
         },
         search(){
           var _this = this
-
         if(_this.searchText==''||undefined){
           alert('请输入搜索内容')
-        }else if(_this.searchText==''&&_this.$cookies.get('token')==null){
+        }else if(!_this.$cookies.get('token')){
           _this.$parent.isLoginModel = true
         }else{
             this.$emit('child', _this.searchText);
@@ -98,8 +99,9 @@
           if(!this.$cookies.get("token")){
             alert("退出完成");
             this.isLogin = false;
+            this.$router.push({path:'/'})
+            window.location.reload()
           }
-          this.$router.push({path:'/'})
         },
 
       }

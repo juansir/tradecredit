@@ -83,7 +83,7 @@
               reportCorpChnName:'',
               reportCorpEngName:'',
               reportCorpaddress:'',
-              creditno:'20000340',
+              creditno:'',
               istranslation:'0',
             },
             noReport:{

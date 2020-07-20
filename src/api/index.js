@@ -10,6 +10,8 @@ const api = {
   getCareStatus :url +'user/getCareStatus', //企业关注
   zhongxinbao :url+'company/zhongxinbao', //企业关注
   getPDF :url+'company/getPDF', //PDF下载
+  getUserList :url+'user/getUserList', //用户管理
+  updateUser :url+'user/updateUser', //用户管理启用
 }
 
 module.exports = api

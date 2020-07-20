@@ -5,7 +5,7 @@
       <div class="index_content flex">
         <!--检测列表-->
         <div class="pro_content_left">
-          <p class="content_title">检测列表 <span class="fl-right">根据关键字，共搜索到 {{num}} 条数据结果</span></p>
+          <p class="content_title">检测列表 <span class="fl-right">根据关键字，共搜索到 {{num}} 条数据结果，结果来自客商主档/中诚信</span></p>
           <ul class="proList_li" v-if="userList.length>0">
             <li class="clear" v-for="(item,index) in userList" :key="index">
               <div class="fl-left proList_content">
@@ -31,6 +31,8 @@
               <li v-for="(item,index) in followList" :key="index" @click="moreNews(item.companyName,0)">
                 <img src="../../static/img/notice.png" alt="" @click.stop="delCare(item.cid,false)">
                 <span>{{item.companyName}}</span>
+                <img class="rightIcon" src="../../static/img/index_icon01.png" alt="">
+                <img class="rightIcon" src="../../static/img/index_icon02.png" alt="">
               </li>
             </ul>
           </div>

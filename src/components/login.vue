@@ -34,22 +34,32 @@
           } else {
             axios.post(_this.$api.login,_this.loginForm).then(res => {
               if (res.status == 200) {
+                console.log(res);
                 //_this.userToken = 'Bearer ' + res.data.data.body.token;
                 // 将用户token保存到vuex中
                 //_this.changeLogin({ Authorization: _this.userToken });
                 //_this.$router.push('/');
-                if(res.data.token){
+                if(res.data.code==0){
                   //存储cookie值
+                  alert('登录成功');
+                  /*失效时间*/
                   var millisecond = new Date().getTime();
                   var expiresTime = new Date(millisecond + 60 * 1000 * 30);
                   _this.$cookies.set("token",res.data.token, {expires: expiresTime ,path:"/"});
-                  alert('登录成功');
+                  _this.$cookies.set("name",res.data.username, {expires: expiresTime ,path:"/"});
+                  _this.$cookies.set("userId",res.data.userId, {expires: expiresTime ,path:"/"});
                   setTimeout(function(){
                     this.$cookies.set("token", '');
                     this.$cookies.remove("token");
+                    this.$cookies.remove("name");
+                    this.$cookies.remove("userId");
                     alert('登录失效，请重新登录');
                   },30000)
                   _this.$parent.isLoginModel = false
+                  window.location.reload()
+                }else{
+                  alert(res.data.msg)
+                  _this.$router.push({path:'/'})
                   window.location.reload()
                 }
               }
