@@ -34,7 +34,7 @@
           } else {
             axios.post(_this.$api.login,_this.loginForm).then(res => {
               if (res.status == 200) {
-                console.log(res);
+               // console.log(res);
                 //_this.userToken = 'Bearer ' + res.data.data.body.token;
                 // 将用户token保存到vuex中
                 //_this.changeLogin({ Authorization: _this.userToken });
