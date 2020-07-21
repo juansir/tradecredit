@@ -24,12 +24,14 @@ import axios from 'axios';
 axios.interceptors.response.use(response => {
   if (response) {
     //console.log(response);
-    if(response.data.code == 300){
+    if(response.data.code == 1){
       localStorage.clear();     //删除用户信息
       //如果超时就处理 ，指定要跳转的页面(比如登陆页)
       alert('登录失效,请重新登录!')
-      router.replace({path: '/'})
-      window.location.reload()
+      setTimeout(function(){
+        router.replace({path: '/'})
+        window.location.reload()
+      },1000)
     }
   }
   return response;

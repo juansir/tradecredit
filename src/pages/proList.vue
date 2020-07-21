@@ -5,11 +5,11 @@
       <div class="index_content flex">
         <!--检测列表-->
         <div class="pro_content_left">
-          <p class="content_title">检测列表 <span class="fl-right">根据关键字，共搜索到 {{num}} 条数据结果，结果来自{{sourceType}}</span></p>
+          <p class="content_title">检测列表 <span class="fl-right">根据关键字，共搜索到 {{num}} 条数据结果，结果来自{{sourceType}}<a class="postLink" @click="postSearch()">模糊接口查询</a></span></p>
           <ul class="proList_li" v-if="userList.length>0">
             <li class="clear" v-for="(item,index) in userList" :key="index">
               <div class="fl-left proList_content">
-                <p class="proList_txt" @click="moreNews(0)">{{item.companyName}}</p>
+                <p class="proList_txt" @click="moreNews(item.companyName,0)">{{item.companyName}}</p>
                 <p>社会统一信用代码：{{item.creditCode}}</p>
                 <p>法人代表：{{item.operName}}</p>
                 <p>成立时间：{{item.buildDate}}</p>
@@ -141,6 +141,28 @@
         },
         moreNews(title,nav){
           this.$router.push({name:'essInfo',query:{title:title,nav:nav}})
+        },
+        /*接口查询*/
+        postSearch(){
+          var text = this.$route.query.text
+          axios({
+            method: 'post',
+            headers:{
+              "token": this.$cookies.get('token')||'',
+            },
+            url:this.$api.directList,
+            data:{
+              "keyword":text,
+              "page":1
+            }
+          }).then(res => {
+            if (res.status == 200) {
+              console.log(res.data);
+              this.userList = res.data.searchList
+              this.num = res.data.searchList.length
+              this.sourceType = res.data.sourceType
+            }
+          });
         }
       }
     }
@@ -194,5 +216,11 @@
   .proList_btn dd:hover{
     background: #617be3;
     color: #fff;
+  }
+  .postLink{
+    color: #1b7fbd;
+    text-decoration-line: underline;
+    margin-left: 10px;
+    cursor: pointer;
   }
 </style>

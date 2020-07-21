@@ -99,14 +99,55 @@
         this.getCare()
       },
       mounted() {
-       // console.log(this.$cookies.get('token'));
-        if(this.$cookies.get('token')){
+        if(this.$route.query.username){
+          this.loginInfo(this.$route.query.username)
+          this.isLogin = true
+        }else if(this.$cookies.get('token')){
           this.isLogin = true
         }else{
           this.isLogin = false
         }
       },
       methods:{
+        loginInfo(name){
+          var _this = this
+          axios.post(_this.$api.login, {
+            'username':name,
+            'loginType':'skip'
+          }).then(res => {
+            if (res.status == 200) {
+              console.log(res);
+              if(res.data.code==0){
+                //存储cookie值
+                alert('登录成功');
+                /*失效时间*/
+                var millisecond = new Date().getTime();
+                var expiresTime = new Date(millisecond + 60 * 1000 * 30);
+                _this.$cookies.set("token",res.data.token, {expires: expiresTime ,path:"/"});
+                _this.$cookies.set("name",res.data.username, {expires: expiresTime ,path:"/"});
+                _this.$cookies.set("userId",res.data.userId, {expires: expiresTime ,path:"/"});
+                setTimeout(function(){
+                  this.$cookies.set("token", '');
+                  this.$cookies.remove("token");
+                  this.$cookies.remove("name");
+                  this.$cookies.remove("userId");
+                  alert('登录失效，请重新登录');
+                },30000)
+                _this.$parent.isLoginModel = false
+                window.location.reload()
+              }else{
+                alert(res.data.msg)
+                _this.$router.push({path:'/'})
+                window.location.reload()
+              }
+            }else{
+              alert('登录名或者密码错误')
+            }
+          }).catch(err=>{
+            alert('登录名或者密码错误')
+            console.log(err);
+          });
+        },
         /*改变样式*/
         changeNav(index){
           this.changewarnNav = index

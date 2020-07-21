@@ -8,7 +8,7 @@
         <div class="clear manageTableTitle">
           <el-input class="fl-left manageTableInput" v-model="userName" placeholder="请输入用户名"></el-input>
           <el-input class="fl-left manageTableInput" v-model="userCode" placeholder="请输入工号"></el-input>
-          <el-button type="primary">查询</el-button>
+          <el-button type="primary" @click="doSearch()">查询</el-button>
         </div>
         <el-table
           ref="multipleTable"
@@ -90,6 +90,8 @@
             </template>
           </el-table-column>
         </el-table>
+
+        <paging :pages="pages"></paging>
       </div>
 
       <!--公用底部-->
@@ -100,10 +102,11 @@
 <script>
   import moreHeader from '@/components/moreHeader'
   import allFooter from '@/components/allFooter'
+  import paging from '@/components/paging'
   import axios from 'axios';
     export default {
       name: "management",
-      components:{moreHeader,allFooter},
+      components:{moreHeader,allFooter,paging},
       data(){
         return{
           tableData: [/*{
@@ -136,7 +139,8 @@
           },*/],
           multipleSelection: [],
           userName:'',
-          userCode:''
+          userCode:'',
+          pages:5,
         }
       },
       created() {
@@ -150,14 +154,16 @@
             headers:{
               "token": this.$cookies.get('token')||'',
             },
-            url:this.$api.getUserList,
+            url:this.$api.searchUser,
             data:{
               "pageIndex": page,
               "pageSize": 20
             }
           }).then(res => {
+            console.log(res);
             if (res.status == 200) {
               this.tableData = res.data.userList
+              this.pages = res.data.totalPages
               this.tableData.map(m=>{
                 if(m.status==0){
                   m.staTxt = '已停用'
@@ -178,8 +184,6 @@
         },
 
         /*列表操作*/
-        /*handleEditAll(){},
-        handleDeleteAll(){},*/
         handleEdit(index,row){
           this.updateUser(row.userId,1)
         },
@@ -200,8 +204,36 @@
             }
           }).then(res => {
             if (res.status == 200) {
-              console.log(res);
+              //console.log(res);
               this.getUserInfo(1)
+            }
+          });
+        },
+        /*查询*/
+        doSearch(){
+          axios({
+            method: 'post',
+            headers:{
+              "token": this.$cookies.get('token')||'',
+            },
+            url:this.$api.searchUser,
+            data:{
+              "pageIndex": 1,
+              "pageSize": 20,
+              "username": this.userCode,
+              "name": this.userName
+            }
+          }).then(res => {
+            if (res.status == 200) {
+              //console.log(res);
+              this.tableData = res.data.userList
+              this.tableData.map(m=>{
+                if(m.status==0){
+                  m.staTxt = '已停用'
+                }else {
+                  m.staTxt = '已启用'
+                }
+              })
             }
           });
         }
