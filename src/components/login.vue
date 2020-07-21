@@ -54,7 +54,7 @@
                     this.$cookies.remove("name");
                     this.$cookies.remove("userId");
                     alert('登录失效，请重新登录');
-                  },30000)
+                  },1800000)
                   _this.$parent.isLoginModel = false
                   window.location.reload()
                 }else{

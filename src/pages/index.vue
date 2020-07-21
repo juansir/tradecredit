@@ -131,7 +131,7 @@
                   this.$cookies.remove("name");
                   this.$cookies.remove("userId");
                   alert('登录失效，请重新登录');
-                },30000)
+                },1800000)
               }else{
                 alert(res.data.msg)
               }
