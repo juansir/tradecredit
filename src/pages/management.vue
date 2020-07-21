@@ -160,7 +160,7 @@
               "pageSize": 20
             }
           }).then(res => {
-            console.log(res);
+            //console.log(res);
             if (res.status == 200) {
               this.tableData = res.data.userList
               this.pages = res.data.totalPages

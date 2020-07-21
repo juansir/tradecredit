@@ -149,7 +149,9 @@
         /*应用跳转*/
         goPath(index){
           if(index==4){
-            this.$router.push('/management')
+            if(this.$route.query.username=='admin'){
+              this.$router.push('/management')
+            }
           }
         },
 

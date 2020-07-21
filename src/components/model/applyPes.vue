@@ -132,7 +132,11 @@
             data:this.noReport
           }).then(res => {
             //console.log(res.data.returnMsg);
-            this.$message.success(res.data.returnMsg)
+            if(res.status==200){
+              this.$message.success(res.data.returnMsg)
+            }else{
+
+            }
             this.hideshowPes()
           }).catch(err=>{
             console.log(err);

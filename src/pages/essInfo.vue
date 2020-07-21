@@ -45,35 +45,12 @@
             changeTabShow:0,
           }
       },
-      created() {
-        this.getCare()
-      },
       mounted() {
         //console.log(this.$route.query);
         this.changeTabShow = this.$route.query.nav
         this.company = this.$route.query.title
       },
       methods:{
-        /*关注清单*/
-        getCare(){
-          axios({
-            method: 'post',
-            headers:{
-              "token": this.$cookies.get('token')||'',
-            },
-            url:this.$api.getCareStatus,
-            data:{
-              "userId":this.$cookies.get('userId'),
-              "companyId":3
-            }
-          }).then(res => {
-            if (res.status == 200) {
-              //console.log(res.data);
-              this.notice = res.data.careStatus
-            }
-          });
-        },
-
         /*切换tab*/
         changeTab(index){
           this.changeTabShow = index

@@ -107,7 +107,7 @@
             },
             url:this.$api.getCareList,
             data:{
-              "userId":1
+              "userId":this.$cookies.get('userId')
             }
           }).then(res => {
             if (res.status == 200) {
