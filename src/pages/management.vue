@@ -58,10 +58,7 @@
           <el-table-column
             prop="status"
             label="状态"
-            width="100"
-            :filters="[{ text: '已停用', value: '0' }, { text: '已启用', value: '1' }]"
-            :filter-method="filterTag"
-            filter-placement="bottom-end">
+            width="100">
             <template slot-scope="scope">
               <el-tag
                 :type="scope.row.staTxt === '已启用' ? 'primary' : 'info'"
@@ -175,10 +172,6 @@
             }
           });
         },
-        filterTag(value, row) {
-          return row.status === value;
-        },
-
         handleSelectionChange(val) {
           this.multipleSelection = val;
         },

@@ -96,7 +96,6 @@
       }
     },
     created() {
-      this.getCare()
       if(this.$route.query.username){
         this.loginInfo(this.$route.query.username)
       }else if(this.$cookies.get('token')){
@@ -104,9 +103,7 @@
       }else{
         this.isLogin = false
       }
-    },
-    mounted() {
-
+      this.getCare()
     },
     methods:{
       loginInfo(name){
