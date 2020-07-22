@@ -105,6 +105,13 @@
           this.showPes = true
         },
         downPdf(){
+         var data1 = {
+            "userId":parseInt(this.$cookies.get('userId')),
+              "username":"admin",
+              "password":"123456",
+              "clientNo":"20000340"
+          }
+          console.log(data1);
           axios({
             method: 'post',
             headers:{
@@ -112,9 +119,10 @@
             },
             url:this.$api.getPDF,
             data:{
-              "userId":this.$cookies.get('userId'),
+              "userId":parseInt(this.$cookies.get('userId')),
               "username":"admin",
-              "password":"123456"
+              "password":"123456",
+              "clientNo":"20000340"
             },
             responseType: 'blob',
           }).then(res => {

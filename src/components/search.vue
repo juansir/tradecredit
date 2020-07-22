@@ -26,7 +26,7 @@
             },
             url:this.$api.getCareOrNot,
             data:{
-              "userId":this.$cookies.get('userId'),
+              "userId":parseInt(this.$cookies.get('userId')),
               "companyId":id,
               "relation":val
             }

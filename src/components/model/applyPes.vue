@@ -77,17 +77,17 @@
           return{
             user:'admin',
             report:{
-              userId:this.$cookies.get('userId'),
+              userId:parseInt(this.$cookies.get('userId')),
               reportbuyerNo:'CHN001941411',
               reportCorpCountryCode:'',
               reportCorpChnName:'',
               reportCorpEngName:'',
               reportCorpaddress:'',
               creditno:'',
-              istranslation:'0',
+              istranslation:'0'
             },
             noReport:{
-              userId:this.$cookies.get('userId'),
+              userId:parseInt(this.$cookies.get('userId')),
               reportbuyerNo:'',
               reportCorpCountryCode:'',
               reportCorpChnName:'',
