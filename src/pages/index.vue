@@ -97,8 +97,6 @@
       },
       created() {
         this.getCare()
-      },
-      mounted() {
         if(this.$route.query.username){
           this.loginInfo(this.$route.query.username)
           this.isLogin = true
@@ -107,6 +105,9 @@
         }else{
           this.isLogin = false
         }
+      },
+      mounted() {
+
       },
       methods:{
         loginInfo(name){
@@ -164,7 +165,7 @@
             },
             url:this.$api.getCareList,
             data:{
-              "userId":this.$cookies.get('userId')
+              "userId":parseInt(this.$cookies.get('userId'))
             }
           }).then(res => {
             if (res.status == 200) {
